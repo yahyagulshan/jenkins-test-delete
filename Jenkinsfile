@@ -1,12 +1,15 @@
 pipeline {
     agent any
-    triggers {
-    githubPush {
-        branches('main', 'develop') // Trigger on pushes to main or develop branches
-    }
-}
+    
     
     stages{
+        stage {
+    when { 
+        expression { 
+            branch 'develop'
+        }
+    }
+}
         stage('Build docker image'){
             steps{
                 script{
