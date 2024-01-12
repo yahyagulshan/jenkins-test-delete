@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    triggers {
-    githubPush()
-  }
+    pipelineTriggers([
+      [$class: "GitHubPushTrigger"]
+    ])
     
     stages{
         stage('Build docker image'){
@@ -37,7 +37,7 @@ pipeline {
     }
 }
 
-#
+
 
 
 
