@@ -1,7 +1,7 @@
 pipeline {
     agent any
     triggers {
-    pollSCM('Git') // Enabling being build on Push
+    pollSCM('main') // Enabling being build on Push
   }
     
     stages{
