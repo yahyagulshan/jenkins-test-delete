@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    triggers {
-    pollSCM('main') // Enabling being build on Push
-  }
+    
     
     stages{
         stage('Build docker image'){
