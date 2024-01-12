@@ -1,0 +1,37 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: my-pod
+  namespace: default
+  labels:
+    app: my-pod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-pod
+  template:
+    metadata:
+      labels:
+        app: my-pod
+    spec:
+      containers:
+      - name: my-pod
+        image: "localhost:5000/my-php-app"
+        ports:
+          - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-pod-service
+  namespace: default
+spec:
+  selector:
+    app: my-pod
+  type: LoadBalancer
+  ports:
+  - name: http
+    targetPort: 3000
+    port: 80
