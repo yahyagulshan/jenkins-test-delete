@@ -1,17 +1,10 @@
 pipeline {
     agent any
-    pipelineTriggers([
-      [$class: "GitHubPushTrigger"]
-    ])
+    triggers {
+    pollSCM('') // Enabling being build on Push
+  }
     
     stages{
-        stage {
-    when { 
-        expression { 
-            branch 'main'
-        }
-    }
-}
         stage('Build docker image'){
             steps{
                 script{
