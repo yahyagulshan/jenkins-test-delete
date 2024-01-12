@@ -1,15 +1,10 @@
 pipeline {
     agent any
-    
+    pipelineTriggers([
+      [$class: "GitHubPushTrigger"]
+    ])
     
     stages{
-        stage {
-    when { 
-        expression { 
-            branch 'develop'
-        }
-    }
-}
         stage('Build docker image'){
             steps{
                 script{
