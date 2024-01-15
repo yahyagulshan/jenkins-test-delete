@@ -6,7 +6,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t yahya4246/jenkins-image:version1 .'
+                    sh 'docker build -t yahya4246/jenkins-image:version2 .'
                 }
             }
         }
@@ -17,7 +17,7 @@ pipeline {
                    sh 'docker login -u yahya4246 -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push yahya4246/jenkins-image:version1'
+                   sh 'docker push yahya4246/jenkins-image:version2'
                 }
             }
         }
