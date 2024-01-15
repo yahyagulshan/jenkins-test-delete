@@ -24,7 +24,7 @@ pipeline {
         
         stage('Deploy App on k8s') {
       steps {
-          {
+          script {
                 def imageTag = "v1.${BUILD_NUMBER}"  // Replace with your versioning strategy
                 sh "sed -i 's/{{IMAGE_TAG}}/${imageTag}/' deployment.yaml"
             }
