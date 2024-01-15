@@ -17,7 +17,7 @@ pipeline {
                    sh 'docker login -u yahya4246 -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push yahya4246/jenkins-image:{{IMAGE_TAG}}'
+                   sh 'docker push yahya4246/jenkins-image:version1'
                 }
             }
         }
