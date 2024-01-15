@@ -6,7 +6,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t yahya4246/jenkins-image .'
+                    sh 'docker build -t yahya4246/jenkins-image:version1 .'
                 }
             }
         }
