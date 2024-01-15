@@ -24,14 +24,13 @@ pipeline {
         
         stage('Deploy App on k8s') {
       steps {
-
-        withCredentials([
-            string(credentialsId: 'my_kubernetes', variable: 'api_token')
-            ]){
+          {
                 def imageTag = "v1.${BUILD_NUMBER}"  // Replace with your versioning strategy
                 sh "sed -i 's/{{IMAGE_TAG}}/${imageTag}/' deployment.yaml"
-            } 
-            {
+            }
+        withCredentials([
+            string(credentialsId: 'my_kubernetes', variable: 'api_token')
+            ]) {
              sh 'kubectl --token $api_token --server http://127.0.0.1:45263/  --insecure-skip-tls-verify=true apply -f deployment.yaml '
                }
             }
