@@ -17,16 +17,21 @@ pipeline {
                    sh 'docker login -u yahya4246 -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push yahya4246/jenkins-image'
+                   sh 'docker push yahya4246/jenkins-image:{{IMAGE_TAG}}'
                 }
             }
         }
         
         stage('Deploy App on k8s') {
       steps {
+
         withCredentials([
             string(credentialsId: 'my_kubernetes', variable: 'api_token')
-            ]) {
+            ]){
+                def imageTag = "v1.${BUILD_NUMBER}"  // Replace with your versioning strategy
+                sh "sed -i 's/{{IMAGE_TAG}}/${imageTag}/' deployment.yaml"
+            } 
+            {
              sh 'kubectl --token $api_token --server http://127.0.0.1:45263/  --insecure-skip-tls-verify=true apply -f deployment.yaml '
                }
             }
