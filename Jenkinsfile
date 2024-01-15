@@ -1,12 +1,15 @@
 pipeline {
     agent any
     
-    
+    environment {
+        // Use a dynamic value for the image tag, for example, the Jenkins build number
+        IMAGE_TAG = "v1.${BUILD_NUMBER}"
+    }
     stages{
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t yahya4246/jenkins-image:version4 .'
+                    sh 'docker build -t yahya4246/jenkins-image:${IMAGE_TAG} .'
                 }
             }
         }
@@ -17,11 +20,20 @@ pipeline {
                    sh 'docker login -u yahya4246 -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push yahya4246/jenkins-image:version4'
+                   sh 'docker push yahya4246/jenkins-image:${IMAGE_TAG}'
                 }
             }
         }
         
+        stage('Update deployment.yaml') {
+            steps {
+                // Update the deployment.yaml file with the dynamic image tag
+                script {
+                    sh "sed -i 's#image: yahya4246/jenkins-image:.*#image: yahya4246/jenkins-image:${IMAGE_TAG}#' deployment.yaml"
+                }
+            }
+        }
+
         stage('Deploy App on k8s') {
       steps {
         //   script {
@@ -38,6 +50,8 @@ pipeline {
         
     }
 }
+
+
 
 
 

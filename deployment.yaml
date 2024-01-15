@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: my-pod
-        image: "yahya4246/jenkins-image:latest"
+        image: "yahya4246/jenkins-image:${IMAGE_TAG}"
         ports:
           - containerPort: 3000
 ---
