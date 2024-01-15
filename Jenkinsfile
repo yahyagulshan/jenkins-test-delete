@@ -6,7 +6,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t yahya4246/jenkins-image:version2 .'
+                    sh 'docker build -t yahya4246/jenkins-image:version3 .'
                 }
             }
         }
@@ -17,17 +17,17 @@ pipeline {
                    sh 'docker login -u yahya4246 -p ${dockerhubpwd}'
 
 }
-                   sh 'docker push yahya4246/jenkins-image:version2'
+                   sh 'docker push yahya4246/jenkins-image:version3'
                 }
             }
         }
         
         stage('Deploy App on k8s') {
       steps {
-          script {
-                def imageTag = "v1.${BUILD_NUMBER}"  // Replace with your versioning strategy
-                sh "sed -i 's/{{IMAGE_TAG}}/${imageTag}/' deployment.yaml"
-            }
+        //   script {
+        //         def imageTag = "v1.${BUILD_NUMBER}"  // Replace with your versioning strategy
+        //         sh "sed -i 's/{{IMAGE_TAG}}/${imageTag}/' deployment.yaml"
+        //     }
         withCredentials([
             string(credentialsId: 'my_kubernetes', variable: 'api_token')
             ]) {
