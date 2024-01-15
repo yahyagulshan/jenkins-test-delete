@@ -54,60 +54,7 @@ pipeline {
 
 
 
-pipeline {
-    agent any
 
-    environment {
-        IMAGE_TAG = "v1.${BUILD_NUMBER}"  // Customize this based on your versioning strategy
-    }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // Your build steps here (e.g., building Docker images)
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    // Update deployment.yaml with the new image tag
-                    sh "sed -i 's/{{IMAGE_TAG}}/${IMAGE_TAG}/' deployment.yaml"
-
-                    // Deploy to Kubernetes using kubectl apply
-                    sh 'kubectl apply -f deployment.yaml'
-                }
-            }
-        }
-
-        stage('Post-build') {
-            steps {
-                // Any post-build steps
-            }
-        }
-    }
-
-    post {
-        success {
-            // Actions to be taken if the build is successful
-            echo "Build and deployment to Kubernetes successful with image tag: ${IMAGE_TAG}"
-        }
-        failure {
-            // Actions to be taken if the build fails
-            echo 'Build or deployment to Kubernetes failed! Take corrective actions.'
-        }
-        always {
-            // Actions to be taken regardless of build result
-            echo 'Cleaning up...'
-        }
-    }
-}
 
 
 
