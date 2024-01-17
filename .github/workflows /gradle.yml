@@ -2,7 +2,7 @@ name: Java CICD with Gradle
 
 on:
   push:
-    branches: [ dev ]
+    branches: " dev "
     
 env:
   DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }} 
